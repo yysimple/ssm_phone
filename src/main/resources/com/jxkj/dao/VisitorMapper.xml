@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jxkj.dao.VisitorDao">
+    <select id="visitorList" resultType="com.jxkj.model.Visitor" parameterType="string">
+          select * from visitor order by long_time desc
+    </select>
+    <insert id="addVisitor" parameterType="com.jxkj.model.Visitor">
+        insert into visitor
+          (visitor_id,visitor_name,visitor_time,long_time)
+          values
+          (#{visitorId},#{visitorName},#{visitorTime},#{longTime})
+    </insert>
+    <delete id="delVisitor">
+        delete from visitor
+        where long_time =
+              (select v.t from (select min(long_time) t from visitor) v)
+    </delete>
+</mapper>
